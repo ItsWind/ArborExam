@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+        <title>###</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+    </head>
+    <body class="column">
+        <nav class="row widthDefault">
+            <h1>Arboratory</h1>
+            <div class="column">
+                <h1>{{user.fullName}}</h1>
+                <a href="/account">Manage My Trees</a>
+                <a href="/">Dashboard</a>
+                <a href="/logout">Logout</a>
+            </div>
+        </nav>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p><strong>Error</strong>: {{message}}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form class="box" action="{{mode.action}}" method="post">
+            <input type="hidden" name="authUserID" value="{{user.id}}">
+            <input type="hidden" name="treeID" value="{{tree.id}}">
+            <h1>{{mode.title}}</h1>
+            <div class="column">
+                <label class="row widthDefault">
+                    Species
+                    <input type="text" name="species" value="{{tree.species}}">
+                </label>
+                <label class="row widthDefault">
+                    Location
+                    <input type="text" name="location" value="{{tree.location}}">
+                </label>
+                <label class="row widthDefault">
+                    Reason
+                    <input type="text" name="reason" value="{{tree.reason}}">
+                </label>
+                <label class="row widthDefault">
+                    Date Planted
+                    <input type="date" name="plantedAt" value="{{tree.plantedAt}}">
+                </label>
+            </div>
+            <input type="submit" value="{{mode.button}}">
+        </form>
+    </body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+        <title>###</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+    </head>
+    <body class="column">
+        <nav class="row widthDefault">
+            <h1>Arboratory</h1>
+            <div class="column">
+                <h1>{{user.fullName}}</h1>
+                <a href="/">Dashboard</a>
+                <a href="/logout">Logout</a>
+            </div>
+        </nav>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p><strong>Error</strong>: {{message}}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <h1>Manage My Trees</h1>
+        {% for tree in trees %}
+            <div class="box row widthMedium">
+                <div class="column">
+                    <p>{{tree.species}}</p>
+                </div>
+                <div class="column">
+                    <p>Date Planted:</p>
+                    <p>{{tree.plantedAt}}</p>
+                </div>
+                <div class="row">
+                    <a href="/tree/{{tree.id}}">View</a>
+                    <a href="/tree/{{tree.id}}/edit">Edit</a>
+                    <a href="/tree/{{tree.id}}/delete">Delete</a>
+                </div>
+            </div>
+        {% endfor %}
+    </body>
+</html>

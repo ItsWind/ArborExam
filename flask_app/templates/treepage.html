@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+        <title>###</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+    </head>
+    <body class="column">
+        <nav class="row widthDefault">
+            <h1>Arboratory</h1>
+            <div class="column">
+                <h1>{{user.fullName}}</h1>
+                <a href="/account">Manage My Trees</a>
+                <a href="/">Dashboard</a>
+                <a href="/logout">Logout</a>
+            </div>
+        </nav>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p><strong>Error</strong>: {{message}}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <h1>{{tree.species}}</h1>
+        <div class="box row widthMedium">
+            <div class="column widthDefault">
+                <p>Planted by: {{tree.planter.fullName}}</p>
+                <p>Location: {{tree.location}}</p>
+                <p>Date Planted: {{tree.plantedAt}}</p>
+                <p>Reason: {{tree.reason}}</p>
+            </div>
+            <div class="column widthDefault">
+                <p>Visitors:</p>
+                {% for visitor in visitors %}
+                    <p>{{visitor.user.fullName}}</p>
+                {% endfor %}
+
+                {% if hasVisited %}
+                    {% set buttonText = "I did not visit" %}
+                    {% set buttonHref = "unvisit" %}
+                {% else %}
+                    {% set buttonText = "I visited" %}
+                    {% set buttonHref = "visit" %}
+                {% endif %}
+                <a href="/tree/{{tree.id}}/{{buttonHref}}">{{buttonText}}</a>
+            </div>
+        </div>
+        <h1>Entry created: {{tree.createdAt}}</h1>
+        <h1>Last update: {{tree.updatedAt}}</h1>
+    </body>
+</html>
