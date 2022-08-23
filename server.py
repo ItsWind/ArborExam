@@ -5,4 +5,4 @@ from flask_app.controllers import trees
 from flask_app.controllers import visitors
 
 if __name__=="__main__":
-    app.run(host="44.203.4.67")
+    app.run(host="0.0.0.0")
